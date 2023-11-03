@@ -1,9 +1,9 @@
-import Income from "../models/incomeModel.js";
+import Expense from "../models/expenseModel.js";
 
-const addIncome = async (req, res) => {
+const addExpense = async (req, res) => {
   const { title, amount, category, description, date } = req.body;
 
-  const income = new Income({
+  const expense = new Expense({
     title,
     amount,
     category,
@@ -29,32 +29,32 @@ const addIncome = async (req, res) => {
     //   });
     // }
 
-    await income.save();
-    res.send({ message: "Income added Successfully " });
+    await expense.save();
+    res.send({ message: "Expense added Successfully " });
   } catch (e) {
     res.status(500).send({ error: "Server Error " + e.message });
   }
 };
 
-const getIncomes = async (req, res) => {
+const getExpenses = async (req, res) => {
   try {
-    const incomes = await Income.find().sort({ createdAt: -1 });
-    res.status(200).send({ incomes });
+    const expenses = await Expense.find().sort({ createdAt: -1 });
+    res.status(200).send({ expenses });
   } catch (e) {
     res.status(500).send({ error: "Server Error " + e.message });
   }
 };
 
-const deleteIncome = async (req, res) => {
+const deleteExpense = async (req, res) => {
   const { id } = req.params;
   try {
-    const income = await Income.findByIdAndDelete(id);
+    const expense = await Expense.findByIdAndDelete(id);
     res
       .status(200)
-      .json({ message: "Income Deleted Successfully", income: income });
+      .json({ message: "Expense Deleted Successfully", expense: expense });
   } catch (e) {
     res.status(500).send({ error: "Server Error " + e.message });
   }
 };
 
-export { addIncome, getIncomes, deleteIncome };
+export { addExpense, getExpenses, deleteExpense };
